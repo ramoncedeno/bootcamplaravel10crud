@@ -38,15 +38,37 @@ Route::get('/chirps/{chirp?}', function ($chirp=null) {
 })->middleware(['auth', 'verified'])->name('chirps.index');
 
 // insert into database
+
 Route::post('/chirps', function ($chirp=null) {
-    return Chirp::create([
+    // Create the chirp with the provided data
+    $chirp = Chirp::create([
+        'message' => request('message'),
+        'user_id' => auth()->id(),
+    ]);
 
-            'message'=> request('message'),
-            'user_id'=> auth()->id(),
+    // // allows to validate the user session (other form)
+    //  session()->flash('status','Chirp created successfully!');
 
-     ]);
+    // Redirect to the chirps.index view after creating the chirp
+    return to_route('chirps.index')
+        ->with ('status',__('Chirp created successfully!'));
 
 });
+
+
+
+// Route::post('/chirps', function ($chirp=null) {
+//     return Chirp::create([
+
+//             'message'=> request('message'),
+//             'user_id'=> auth()->id(),
+
+//      ]);
+
+//      /* Returns the chirp to the chirps.index view*/
+//      return to_route('chirps.index');
+
+// });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
