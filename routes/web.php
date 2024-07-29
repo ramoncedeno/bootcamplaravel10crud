@@ -14,9 +14,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/*Simplified way of showing a route*/
+
+Route::view ('/','welcome')-> name('welcome');
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+/*route to execute the index.blade.php views*/
+
+// Route::get('/chirps', function () {
+//     return view('chirps.index');
+// });
+
+/*Defines route '/chirps/{chirp?}' with authentication and verification,
+ and returns the 'chirps.index' view concatenated with the optional 'chirp' parameter.*/
+
+Route::get('/chirps/{chirp?}', function ($chirp=null) {
+    return view('chirps.index').$chirp;
+})->middleware(['auth', 'verified'])->name('chirps.index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
