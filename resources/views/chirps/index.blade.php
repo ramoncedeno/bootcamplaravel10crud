@@ -11,7 +11,23 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
 
-                    <h1> "The chirps form will go here"  </h1>
+                    <form method="POST">
+
+                        <!--When using the POST method on forms in Laravel, it is important to include the Blade #csrf
+                         directive to protect against CSRF (Cross-Site Request Forgery) attacks.-->
+                        @csrf
+
+                        <textarea name="message"
+
+                        class="bg-transparent";
+                        placeholder="{{__('What\'s on your mind?')}}"
+
+                        ></textarea>
+
+                        <x-primary-button > Chirp </x-primary-button>
+
+                    </form>
+
 
                 </div>
             </div>

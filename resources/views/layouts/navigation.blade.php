@@ -16,6 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    <!-- This is the link for the CHIRPS route -->
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('chirps.index')" :active="request()->routeIs('chirps.index')">
                             {{ __('Chirps') }}
@@ -78,6 +79,14 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+
+            <!--used to adjust the menu when the screen is minimized for chirps-->
+            <x-responsive-nav-link :href="route('chirps.index')" :active="request()->routeIs('chirps.index')">
+                {{ __('Chirps') }}
+            </x-responsive-nav-link>
+
+
         </div>
 
         <!-- Responsive Settings Options -->

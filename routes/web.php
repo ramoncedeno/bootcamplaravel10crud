@@ -35,6 +35,12 @@ Route::get('/chirps/{chirp?}', function ($chirp=null) {
     return view('chirps.index').$chirp;
 })->middleware(['auth', 'verified'])->name('chirps.index');
 
+Route::post('/chirps', function ($chirp=null) {
+    $messsage= request ('message');
+
+    // insert into database
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
