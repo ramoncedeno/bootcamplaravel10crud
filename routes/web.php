@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Chirp;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -35,10 +37,15 @@ Route::get('/chirps/{chirp?}', function ($chirp=null) {
     return view('chirps.index').$chirp;
 })->middleware(['auth', 'verified'])->name('chirps.index');
 
+// insert into database
 Route::post('/chirps', function ($chirp=null) {
-    $messsage= request ('message');
+    return Chirp::create([
 
-    // insert into database
+            'message'=> request('message'),
+            'user_id'=> auth()->id(),
+
+     ]);
+
 });
 
 Route::get('/dashboard', function () {
