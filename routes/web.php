@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Models\Chirp;
 
 
 /*
@@ -33,46 +33,21 @@ Route::get('/', function () {
 /*Defines route '/chirps/{chirp?}' with authentication and verification,
  and returns the 'chirps.index' view concatenated with the optional 'chirp' parameter.*/
 
-Route::get('/chirps/{chirp?}', function ($chirp=null) {
-    return view('chirps.index').$chirp;
-})->middleware(['auth', 'verified'])->name('chirps.index');
+    // Route to display a list of chirps
+    Route::get('/chirps', [ChirpController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('chirps.index');
 
-// insert into database
+    // Route to store a new chirp
+    Route::post('/chirps', [ChirpController::class, 'store'])
+    ->middleware(['auth', 'verified'])
+    ->name('chirps.store');
 
-Route::post('/chirps', function ($chirp=null) {
-    // Create the chirp with the provided data
-    $chirp = Chirp::create([
-        'message' => request('message'),
-        'user_id' => auth()->id(),
-    ]);
+    // Route to display the dashboard
+    Route::get('/dashboard', [ChirpController::class, 'dashboard'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');   
 
-    // // allows to validate the user session (other form)
-    //  session()->flash('status','Chirp created successfully!');
-
-    // Redirect to the chirps.index view after creating the chirp
-    return to_route('chirps.index')
-        ->with ('status',__('Chirp created successfully!'));
-
-});
-
-
-
-// Route::post('/chirps', function ($chirp=null) {
-//     return Chirp::create([
-
-//             'message'=> request('message'),
-//             'user_id'=> auth()->id(),
-
-//      ]);
-
-//      /* Returns the chirp to the chirps.index view*/
-//      return to_route('chirps.index');
-
-// });
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

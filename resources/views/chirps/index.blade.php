@@ -11,7 +11,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
                     
-                    <form method="POST">
+                    <form method="POST" action="{{ route('chirps.store')}}">
 
                         <!--When using the POST method on forms in Laravel, it is important to include the Blade #csrf
                          directive to protect against CSRF (Cross-Site Request Forgery) attacks.-->
