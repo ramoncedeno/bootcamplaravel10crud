@@ -37,8 +37,10 @@ class ChirpController extends Controller
 
         $request->validate([
 
-            'message'=> 'required|min:3| max:255 ',
+            'message'=> 'required|min:3| max:255 ',  
         ]);
+
+        return auth()->user();
 
             // Create the chirp with the provided data
         $chirp = Chirp::create([
