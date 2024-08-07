@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chirp;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 
 class ChirpController extends Controller
@@ -35,18 +36,20 @@ class ChirpController extends Controller
 
         //Added validation for message field in request
 
-        $request->validate([
+        $validated = $request->validate([
 
-            'message'=> 'required|min:3| max:255 ',  
+            'message'=> 'required|min:3| max:255 ', 
+
         ]);
 
-        return auth()->user();
+            // return auth()->user(); // return user data
 
             // Create the chirp with the provided data
-        $chirp = Chirp::create([
-            'message' => $request->get('message'),
-            'user_id' => auth()->id(),
-        ]);
+        
+      $request-> user()->chirps()->create($validated);
+
+          
+
 
         // // allows to validate the user session (other form)
         //  session()->flash('status','Chirp created successfully!');
